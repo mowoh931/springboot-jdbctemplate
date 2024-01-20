@@ -1,6 +1,5 @@
 package com.baar.springbootjdbctemplate.service;
 
-
 import com.baar.springbootjdbctemplate.dto.PersonDto;
 import com.baar.springbootjdbctemplate.dto.PersonRowMapper;
 import com.baar.springbootjdbctemplate.exception.PersonAlreadtExistsException;
@@ -22,8 +21,7 @@ public class PersonServiceImpl implements PersonService {
     private final JdbcTemplate jdbcTemplate;
     private final PersonResository personResository;
 
-    public PersonServiceImpl(JdbcTemplate jdbcTemplate, PersonResository personResository
-    ) {
+    public PersonServiceImpl(JdbcTemplate jdbcTemplate, PersonResository personResository) {
         this.jdbcTemplate = jdbcTemplate;
         this.personResository = personResository;
     }
@@ -43,8 +41,7 @@ public class PersonServiceImpl implements PersonService {
                 personDto.getFirstName(),
                 personDto.getGender(),
                 personDto.getIpAddress(),
-                personDto.getLastName()
-        );
+                personDto.getLastName());
         log.info("Person created successfully");
 
         final String fetchSql = "SELECT * from person where id = ?";
@@ -91,7 +88,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void deletePerson(Integer id) throws PersonNotFoundException {
-        Person personFound = personResository.findById(id).orElseThrow(() -> new PersonNotFoundException("No such person"));
+        Person personFound = personResository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException("No such person"));
         String deleteSql = " delete from person where id = ?";
         jdbcTemplate.update(deleteSql, id);
         log.info("Delete successful : {}", personFound.getEmail());
