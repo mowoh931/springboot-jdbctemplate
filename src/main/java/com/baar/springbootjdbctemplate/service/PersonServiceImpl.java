@@ -61,7 +61,7 @@ public class PersonServiceImpl implements PersonService {
         final String sql = "SELECT * from person where last_name = ?";
 
         try {
-            final Person person = jdbcTemplate.queryForObject(sql, new Object[]{lastName}, new PersonRowMapper());
+            final Person person = jdbcTemplate.queryForObject(sql, new PersonRowMapper(), lastName);
             log.info("Person with lastname: {} found", lastName);
             return person;
         } catch (Throwable e) {
